@@ -15,6 +15,13 @@
       "when": 1790402118339,
       "tag": "0001_url_key",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1790503004484,
+      "tag": "0002_enriched_at",
+      "breakpoints": true
     }
   ]
 }

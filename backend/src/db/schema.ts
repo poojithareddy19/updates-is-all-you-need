@@ -48,6 +48,8 @@ export const items = pgTable(
     discussionUrl: text("discussion_url"),
     /** Hacker News points, when known. */
     score: integer("score"),
+    /** When the optional AI step processed this item (summary and tags), or null if it has not. */
+    enrichedAt: timestamp("enriched_at", { withTimezone: true }),
     searchVector: tsvector("search_vector").generatedAlwaysAs(
       (): SQL => sql`setweight(to_tsvector('english', coalesce(${items.title}, '')), 'A') || setweight(to_tsvector('english', coalesce(${items.summary}, '') || ' ' || coalesce(${items.aiSummary}, '')), 'B')`,
     ),
