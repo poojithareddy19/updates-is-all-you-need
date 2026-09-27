@@ -10,8 +10,8 @@ export const ENRICH_BATCH_SIZE = 20;
 /** Requests in flight at once. */
 export const ENRICH_CONCURRENCY = 3;
 
-/** No new batch starts after this, so a run fits Vercel's 60 s function limit. */
-export const ENRICH_DEADLINE_MS = 40_000;
+/** No new batch starts after this, so a run fits Vercel Hobby's 300 s function limit. */
+export const ENRICH_DEADLINE_MS = 200_000;
 
 export const DEFAULT_AI_MODEL = "claude-opus-5";
 export const DEFAULT_AI_MAX_ITEMS = 100;

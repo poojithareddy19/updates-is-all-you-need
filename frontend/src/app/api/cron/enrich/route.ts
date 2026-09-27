@@ -2,12 +2,14 @@ import { revalidateTag } from "next/cache";
 import { aiConfig, createClaudeSummarizer, createEnrichStore, enrichItems, isAuthorizedCronRequest } from "@updates/backend";
 import { ITEMS_TAG } from "@/lib/data";
 
-// Batches stop starting at 40 s (ENRICH_DEADLINE_MS), leaving room for requests in flight.
-export const maxDuration = 60;
+// Batches stop starting at 200 s (ENRICH_DEADLINE_MS), leaving room for requests in
+// flight within Vercel Hobby's 300 s limit.
+export const maxDuration = 300;
 
 /**
  * Optional AI step: summarizes and tags items the fetch stored. Vercel Cron calls it
- * a few minutes after the fetch; items it does not reach wait for the next run.
+ * two hours after the fetch (Hobby cron times can drift by up to 59 minutes, so this
+ * keeps the order); items it does not reach wait for the next run.
  * Answers 200 with status "disabled" when ANTHROPIC_API_KEY is not set.
  */
 async function handle(request: Request): Promise<Response> {

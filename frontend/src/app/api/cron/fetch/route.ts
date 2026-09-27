@@ -2,9 +2,9 @@ import { revalidateTag } from "next/cache";
 import { createRunStore, isAuthorizedCronRequest, runFetch } from "@updates/backend";
 import { ITEMS_TAG } from "@/lib/data";
 
-// Vercel Hobby caps functions at 60 s. Each source has a 45 s deadline and they run
-// in parallel, which leaves room for the database work.
-export const maxDuration = 60;
+// Sources run in parallel with a 45 s deadline each, so a run takes under a minute;
+// the extra room covers a slow database. Vercel Hobby allows up to 300 s.
+export const maxDuration = 120;
 
 /**
  * Runs the daily fetch. Vercel Cron calls it with GET once a day; trigger it by hand with
