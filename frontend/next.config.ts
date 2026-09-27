@@ -9,6 +9,10 @@ for (const file of [".env.local", ".env"]) {
   if (existsSync(full)) process.loadEnvFile(full);
 }
 
-const nextConfig: NextConfig = {};
+const nextConfig: NextConfig = {
+  // Static shell plus streamed data; feed queries are cached with "use cache" and
+  // refreshed by tag after each fetch run (see src/lib/data.ts).
+  cacheComponents: true,
+};
 
 export default nextConfig;

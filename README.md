@@ -20,6 +20,20 @@ npm run db:migrate
 npm run dev
 ```
 
+## Dashboard
+
+- **Today** (`/`) lists the items that arrived in the 24 hours up to the latest fetch, newest
+  first. Anchoring the window to the latest fetch rather than the clock means a missed run
+  shows yesterday's batch instead of an empty page.
+- **Tabs** filter by type (News, Articles, Research Papers, Community) and **topic chips** by
+  tag. Both show counts and live in the URL, so every view can be linked and bookmarked.
+- **Search** (`/?q=...`) covers titles and summaries of everything stored (the last 90
+  days) and supports quotes, `OR` and `-exclude`.
+
+Pages send a static shell immediately and stream the feed in. Feed queries are cached
+(`frontend/src/lib/data.ts`) and the cron route expires that cache after every run, so a
+fetch shows up on the next visit.
+
 ## Daily fetch
 
 `/api/cron/fetch` fetches every enabled source, removes duplicates, stores new items,
@@ -34,4 +48,5 @@ source is logged and skipped; the rest still complete.
   ```
 
 - **From the command line:** `npm run fetch` does the same run without the web server and
-  prints a table of per-source counts.
+  prints a table of per-source counts. It cannot expire the site's cache, so a running site
+  shows those items within a few hours rather than right away.

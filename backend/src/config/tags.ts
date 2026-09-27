@@ -99,3 +99,5 @@ export const tagRules: TagRule[] = [
     keywords: ["reinforcement learning", "reward model", "reward models", "policy gradient", "policy optimization", "RL"],
   },
 ];
+
+export const TAG_NAMES: readonly string[] = tagRules.map((r) => r.tag);
