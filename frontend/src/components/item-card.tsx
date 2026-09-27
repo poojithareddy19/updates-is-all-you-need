@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { MessageSquareIcon } from "lucide-react";
+import { MessageSquareIcon, SparklesIcon } from "lucide-react";
 import type { FeedItem } from "@updates/backend";
 import { BookmarkButton } from "@/components/bookmark-button";
 import { badgeVariants } from "@/components/ui/badge";
@@ -50,7 +50,17 @@ export function ItemCard({ item, now }: { item: FeedItem | BookmarkedItem; now: 
       </h2>
 
       {authors && <p className="text-muted-foreground text-xs">{authors}</p>}
-      {summary && <p className="text-muted-foreground line-clamp-3 text-sm">{summary}</p>}
+      {summary && (
+        <p className="text-muted-foreground line-clamp-3 text-sm">
+          {item.aiSummary && (
+            <span className="text-foreground/70 mr-1.5 inline-flex items-center gap-0.5 align-[-1px] text-xs font-medium">
+              <SparklesIcon aria-hidden className="size-3" />
+              AI summary<span className="sr-only">:</span>
+            </span>
+          )}
+          {summary}
+        </p>
+      )}
 
       {(item.tags.length > 0 || item.discussionUrl) && (
         <div className="flex flex-wrap items-center gap-1.5 pt-1">

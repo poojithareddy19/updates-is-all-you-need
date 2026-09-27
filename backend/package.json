@@ -14,7 +14,8 @@
     "db:generate": "drizzle-kit generate",
     "db:migrate": "tsx scripts/migrate.ts",
     "verify-sources": "tsx scripts/verify-sources.ts",
-    "fetch": "tsx scripts/fetch-once.ts"
+    "fetch": "tsx scripts/fetch-once.ts",
+    "enrich": "tsx scripts/enrich-once.ts"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.128.0",

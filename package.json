@@ -14,7 +14,8 @@
     "db:generate": "npm run db:generate -w @updates/backend",
     "db:migrate": "npm run db:migrate -w @updates/backend",
     "verify-sources": "npm run verify-sources -w @updates/backend",
-    "fetch": "npm run fetch -w @updates/backend"
+    "fetch": "npm run fetch -w @updates/backend",
+    "enrich": "npm run enrich -w @updates/backend"
   },
   "engines": {
     "node": ">=20"
