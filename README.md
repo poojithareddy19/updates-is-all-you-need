@@ -4,7 +4,7 @@ A daily dashboard of AI news, articles, research papers and community discussion
 day it collects items from 12 free sources, removes duplicates, tags them by topic and
 shows them in a fast, searchable dashboard. Every item links back to the original.
 
-**Live:** not deployed yet.
+**Live:** [updates-is-all-you-need.vercel.app](https://updates-is-all-you-need.vercel.app)
 
 ## Features
 

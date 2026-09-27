@@ -20,12 +20,8 @@ export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
   title: { default: "Updates Is All You Need", template: "%s | Updates Is All You Need" },
   description: "Daily AI news, articles, research papers and community discussion in one dashboard.",
-  openGraph: {
-    type: "website",
-    siteName: "Updates Is All You Need",
-    title: "Updates Is All You Need",
-    description: "Daily AI news, articles, research papers and community discussion in one dashboard.",
-  },
+  // No og:title or og:description here: previews then use each page's own title and description.
+  openGraph: { type: "website", siteName: "Updates Is All You Need" },
 };
 
 export const viewport: Viewport = {
