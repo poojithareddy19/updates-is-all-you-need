@@ -1,13 +1,23 @@
 import Link from "next/link";
+import { Suspense } from "react";
+import { HeaderNav, NavLinks } from "@/components/header-nav";
+import { ThemeToggle } from "@/components/theme";
 
 export function SiteHeader() {
   return (
-    <header className="border-b">
-      <div className="mx-auto flex w-full max-w-3xl items-center justify-between gap-4 px-4 py-4">
-        <Link href="/" className="group flex flex-col">
-          <span className="text-lg font-semibold tracking-tight group-hover:underline">Updates Is All You Need</span>
-          <span className="text-muted-foreground text-xs">Daily AI news, papers and discussion</span>
+    <header className="bg-background/90 supports-backdrop-filter:bg-background/75 sticky top-0 z-40 border-b backdrop-blur">
+      <div className="mx-auto flex w-full max-w-3xl items-center justify-between gap-3 px-4 py-3">
+        <Link href="/" className="group flex min-w-0 flex-col">
+          <span className="truncate font-semibold tracking-tight group-hover:underline sm:text-lg">Updates Is All You Need</span>
+          <span className="text-muted-foreground hidden text-xs sm:block">Daily AI news, papers and discussion</span>
         </Link>
+        <div className="flex items-center gap-1">
+          {/* On dynamic routes the path is only known at request time; the fallback has the same links. */}
+          <Suspense fallback={<NavLinks pathname={null} />}>
+            <HeaderNav />
+          </Suspense>
+          <ThemeToggle />
+        </div>
       </div>
     </header>
   );

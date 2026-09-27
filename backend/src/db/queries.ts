@@ -1,5 +1,6 @@
 import { and, count, desc, eq, gte, inArray, max, sql, type SQL } from "drizzle-orm";
-import type { ItemType } from "../config/sources";
+import { appTimeZone, isIsoDay } from "../config/app";
+import { ITEM_TYPES, type ItemType } from "../config/sources";
 import { getDb } from "./client";
 import { fetchRuns, items, type FetchRun } from "./schema";
 
@@ -30,8 +31,10 @@ export const TODAY_WINDOW_HOURS = 24;
 export const FEED_PAGE_SIZE = 30;
 
 export interface FeedQuery {
-  /** Full-text search across all stored items. Without it, the feed is Today. */
+  /** Full-text search across all stored items. Takes precedence over `day`. */
   q?: string;
+  /** Items published on this YYYY-MM-DD in APP_TIMEZONE. Without `q` or `day`, the feed is Today. */
+  day?: string;
   type?: ItemType;
   tag?: string;
   /** 1-based. */
@@ -65,8 +68,17 @@ export interface Feed {
   typeCounts: Record<ItemType, number>;
   /** Counts per tag for the current search/window and type, ignoring the tag filter. Most used first. */
   tagCounts: Array<{ tag: string; count: number }>;
-  /** Start of the Today window, or null for a search or an empty database. */
+  /** Start of the Today window, or null for a search, a day or an empty database. */
   windowStart: Date | null;
+}
+
+/** Start and end of a calendar day in APP_TIMEZONE, as SQL timestamptz expressions. */
+function dayBounds(day: string): { start: SQL; end: SQL } {
+  const tz = appTimeZone();
+  return {
+    start: sql`(${day}::date::timestamp at time zone ${tz})`,
+    end: sql`((${day}::date + 1)::timestamp at time zone ${tz})`,
+  };
 }
 
 const feedColumns = {
@@ -95,6 +107,10 @@ export async function getFeed(query: FeedQuery): Promise<Feed> {
   const tsQuery = q ? sql`websearch_to_tsquery('english', ${q})` : undefined;
   if (tsQuery) {
     scope = sql`${items.searchVector} @@ ${tsQuery}`;
+  } else if (query.day) {
+    if (!isIsoDay(query.day)) return emptyFeed();
+    const { start, end } = dayBounds(query.day);
+    scope = sql`${items.publishedAt} >= ${start} and ${items.publishedAt} < ${end}`;
   } else {
     const [row] = await db.select({ newest: max(items.fetchedAt) }).from(items);
     if (!row?.newest) return emptyFeed();
@@ -146,4 +162,35 @@ function emptyFeed(): Feed {
     tagCounts: [],
     windowStart: null,
   };
+}
+
+export interface ArchiveDay {
+  /** YYYY-MM-DD in APP_TIMEZONE. */
+  day: string;
+  total: number;
+  byType: Record<ItemType, number>;
+}
+
+/** Every day that has items, newest first, with counts per type. */
+export async function getArchiveDays(): Promise<ArchiveDay[]> {
+  const local = sql`(${items.publishedAt} at time zone ${appTimeZone()})::date`;
+  const rows = await getDb()
+    .select({ day: sql<string>`to_char(${local}, 'YYYY-MM-DD')`, type: items.type, count: count() })
+    .from(items)
+    // By position: the time zone is a bind parameter, so repeating the expression would
+    // not count as the same one to Postgres.
+    .groupBy(sql`1`, sql`2`)
+    .orderBy(sql`1 desc`);
+
+  const days = new Map<string, ArchiveDay>();
+  for (const row of rows) {
+    let entry = days.get(row.day);
+    if (!entry) {
+      entry = { day: row.day, total: 0, byType: Object.fromEntries(ITEM_TYPES.map((t) => [t, 0])) as Record<ItemType, number> };
+      days.set(row.day, entry);
+    }
+    entry.byType[row.type] = row.count;
+    entry.total += row.count;
+  }
+  return [...days.values()];
 }

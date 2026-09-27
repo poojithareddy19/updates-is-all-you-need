@@ -30,9 +30,19 @@ npm run dev
 - **Search** (`/?q=...`) covers titles and summaries of everything stored (the last 90
   days) and supports quotes, `OR` and `-exclude`.
 
+- **Archive** (`/archive`) lists every day with items, by publish date in `APP_TIMEZONE`;
+  `/archive/2026-09-24` shows one day with the same tabs and topic filters, plus links to
+  the neighbouring days.
+- **Bookmarks** (`/bookmarks`) are kept in the browser's localStorage, no account needed.
+  Each bookmark stores a full copy of the item, so it stays after the 90-day cleanup.
+  They sync between open tabs.
+- **Dark mode** follows the system setting until you pick one with the header toggle; the
+  choice is applied before the first paint, so there is no flash of the wrong theme.
+
 Pages send a static shell immediately and stream the feed in. Feed queries are cached
 (`frontend/src/lib/data.ts`) and the cron route expires that cache after every run, so a
-fetch shows up on the next visit.
+fetch shows up on the next visit. `/archive` is prerendered at build time, so
+`npm run build` needs a reachable `DATABASE_URL` (Vercel provides it during the build).
 
 ## Daily fetch
 

@@ -1,11 +1,12 @@
-import { ITEM_TYPES, type Feed } from "@updates/backend";
+import { ITEM_TYPES } from "@updates/backend/config";
+import type { Feed } from "@updates/backend";
 import { NavLink } from "@/components/nav-link";
 import { feedHref, type FeedParams } from "@/lib/feed-params";
 import { formatCount, TYPE_LABELS } from "@/lib/format";
 import { cn } from "@/lib/utils";
 
 /** All / News / Articles / Research Papers / Community, with counts for the current search and tag. */
-export function TypeTabs({ params, counts }: { params: FeedParams; counts: Feed["typeCounts"] }) {
+export function TypeTabs({ params, counts, basePath }: { params: FeedParams; counts: Feed["typeCounts"]; basePath: string }) {
   const all = Object.values(counts).reduce((a, b) => a + b, 0);
   const tabs = [
     { type: undefined, label: "All", count: all },
@@ -19,7 +20,7 @@ export function TypeTabs({ params, counts }: { params: FeedParams; counts: Feed[
           return (
             <li key={label}>
               <NavLink
-                href={feedHref({ ...params, type, page: undefined })}
+                href={feedHref({ ...params, type, page: undefined }, basePath)}
                 scroll={false}
                 aria-current={active ? "page" : undefined}
                 className={cn(
@@ -41,7 +42,7 @@ export function TypeTabs({ params, counts }: { params: FeedParams; counts: Feed[
 }
 
 /** Topic chips. The active one links back to "no tag". */
-export function TagFilter({ params, counts }: { params: FeedParams; counts: Feed["tagCounts"] }) {
+export function TagFilter({ params, counts, basePath }: { params: FeedParams; counts: Feed["tagCounts"]; basePath: string }) {
   if (counts.length === 0 && !params.tag) return null;
   const shown = params.tag && !counts.some((c) => c.tag === params.tag) ? [{ tag: params.tag, count: 0 }, ...counts] : counts;
   return (
@@ -52,7 +53,7 @@ export function TagFilter({ params, counts }: { params: FeedParams; counts: Feed
           return (
             <li key={tag}>
               <NavLink
-                href={feedHref({ ...params, tag: active ? undefined : tag, page: undefined })}
+                href={feedHref({ ...params, tag: active ? undefined : tag, page: undefined }, basePath)}
                 scroll={false}
                 aria-current={active ? "true" : undefined}
                 className={cn(

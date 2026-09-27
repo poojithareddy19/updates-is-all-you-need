@@ -1,3 +1,4 @@
+import { appTimeZone } from "@updates/backend/config";
 import type { ItemType } from "@updates/backend";
 
 export const TYPE_LABELS: Record<ItemType, string> = {
@@ -14,14 +15,9 @@ export const TYPE_BADGES: Record<ItemType, string> = {
   community: "Community",
 };
 
-function timeZone(): string {
-  const tz = process.env.APP_TIMEZONE || "UTC";
-  try {
-    new Intl.DateTimeFormat("en-US", { timeZone: tz });
-    return tz;
-  } catch {
-    return "UTC";
-  }
+/** APP_TIMEZONE on the server; the reader's own zone in the browser (bookmarks render there). */
+function timeZone(): string | undefined {
+  return typeof window === "undefined" ? appTimeZone() : undefined;
 }
 
 /** "Sep 27, 2026, 9:14 AM UTC" in APP_TIMEZONE. */
@@ -52,4 +48,22 @@ export function formatRelative(date: Date, now: Date): string {
 
 export function formatCount(n: number): string {
   return n.toLocaleString("en-US");
+}
+
+/** "Thursday, September 24, 2026" for a YYYY-MM-DD archive day (a calendar date, no zone shift). */
+export function formatDay(day: string, weekday: "long" | "short" = "long"): string {
+  return new Intl.DateTimeFormat("en-US", {
+    weekday,
+    year: "numeric",
+    month: weekday === "long" ? "long" : "short",
+    day: "numeric",
+    timeZone: "UTC",
+  }).format(new Date(`${day}T00:00:00Z`));
+}
+
+/** "September 2026" for a YYYY-MM-DD day. */
+export function formatMonth(day: string): string {
+  return new Intl.DateTimeFormat("en-US", { month: "long", year: "numeric", timeZone: "UTC" }).format(
+    new Date(`${day}T00:00:00Z`),
+  );
 }

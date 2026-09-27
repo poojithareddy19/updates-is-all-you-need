@@ -6,14 +6,24 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { feedHref, type FeedParams } from "@/lib/feed-params";
 import { cn } from "@/lib/utils";
 
-export function Pagination({ params, page, pageCount }: { params: FeedParams; page: number; pageCount: number }) {
+export function Pagination({
+  params,
+  page,
+  pageCount,
+  basePath,
+}: {
+  params: FeedParams;
+  page: number;
+  pageCount: number;
+  basePath: string;
+}) {
   if (pageCount <= 1) return null;
   const linkClass = buttonVariants({ variant: "outline" });
   const disabledClass = cn(linkClass, "pointer-events-none opacity-50");
   return (
     <nav aria-label="Pages" className="flex items-center justify-between gap-2 pt-2">
       {page > 1 ? (
-        <NavLink href={feedHref({ ...params, page: page - 1 })} className={linkClass} rel="prev">
+        <NavLink href={feedHref({ ...params, page: page - 1 }, basePath)} className={linkClass} rel="prev">
           <ChevronLeftIcon aria-hidden /> Newer
         </NavLink>
       ) : (
@@ -25,7 +35,7 @@ export function Pagination({ params, page, pageCount }: { params: FeedParams; pa
         Page {page} of {pageCount}
       </span>
       {page < pageCount ? (
-        <NavLink href={feedHref({ ...params, page: page + 1 })} className={linkClass} rel="next">
+        <NavLink href={feedHref({ ...params, page: page + 1 }, basePath)} className={linkClass} rel="next">
           Older <ChevronRightIcon aria-hidden />
         </NavLink>
       ) : (

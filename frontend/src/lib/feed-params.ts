@@ -1,4 +1,4 @@
-import { ITEM_TYPES, TAG_NAMES, type ItemType } from "@updates/backend";
+import { ITEM_TYPES, TAG_NAMES, type ItemType } from "@updates/backend/config";
 
 export const MAX_QUERY_LENGTH = 200;
 
@@ -27,13 +27,16 @@ export function parseFeedParams(raw: RawParams): FeedParams {
   return params;
 }
 
-/** Link to the feed with these filters. Omitted or empty values are left out of the URL. */
-export function feedHref(params: FeedParams): string {
+/**
+ * Link to a feed page (Today at "/", or an archive day) with these filters.
+ * Omitted or empty values are left out of the URL.
+ */
+export function feedHref(params: FeedParams, basePath = "/"): string {
   const search = new URLSearchParams();
   if (params.q) search.set("q", params.q);
   if (params.type) search.set("type", params.type);
   if (params.tag) search.set("tag", params.tag);
   if (params.page && params.page > 1) search.set("page", String(params.page));
   const qs = search.toString();
-  return qs ? `/?${qs}` : "/";
+  return qs ? `${basePath}?${qs}` : basePath;
 }

@@ -1,7 +1,9 @@
 import Link from "next/link";
 import { MessageSquareIcon } from "lucide-react";
 import type { FeedItem } from "@updates/backend";
+import { BookmarkButton } from "@/components/bookmark-button";
 import { badgeVariants } from "@/components/ui/badge";
+import type { BookmarkedItem } from "@/lib/bookmarks";
 import { feedHref } from "@/lib/feed-params";
 import { formatCount, formatDateTime, formatRelative, TYPE_BADGES } from "@/lib/format";
 
@@ -20,19 +22,24 @@ function authorLine(authors: string[]): string | null {
   return authors.length > MAX_AUTHORS_SHOWN ? `${shown} et al.` : shown;
 }
 
-export function ItemCard({ item, now }: { item: FeedItem; now: Date }) {
+/** Renders on the server for feeds and in the browser for bookmarks (where dates are strings). */
+export function ItemCard({ item, now }: { item: FeedItem | BookmarkedItem; now: Date }) {
+  const published = new Date(item.publishedAt);
   const summary = item.aiSummary ?? item.summary;
   const authors = item.type === "paper" ? authorLine(item.authors) : null;
 
   return (
     <article className="bg-card flex flex-col gap-2 rounded-xl border p-4">
-      <div className="text-muted-foreground flex flex-wrap items-center gap-x-2 gap-y-1 text-xs">
-        <span className={badgeVariants({ variant: "secondary" })}>{TYPE_BADGES[item.type]}</span>
-        <span className="text-foreground font-medium">{item.sourceName}</span>
-        <span aria-hidden>·</span>
-        <time dateTime={item.publishedAt.toISOString()} title={formatDateTime(item.publishedAt)}>
-          {formatRelative(item.publishedAt, now)}
-        </time>
+      <div className="flex items-start justify-between gap-2">
+        <div className="text-muted-foreground flex flex-wrap items-center gap-x-2 gap-y-1 text-xs">
+          <span className={badgeVariants({ variant: "secondary" })}>{TYPE_BADGES[item.type]}</span>
+          <span className="text-foreground font-medium">{item.sourceName}</span>
+          <span aria-hidden>·</span>
+          <time dateTime={published.toISOString()} title={formatDateTime(published)}>
+            {formatRelative(published, now)}
+          </time>
+        </div>
+        <BookmarkButton item={item} />
       </div>
 
       <h2 className="text-base leading-snug font-semibold">
