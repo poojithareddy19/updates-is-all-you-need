@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title>Example Atom Feed</title>
+  <entry>
+    <title type="html">Robots learn to fold laundry</title>
+    <link rel="alternate" type="text/html" href="https://blog.example.org/robots-laundry" />
+    <link rel="replies" href="https://blog.example.org/robots-laundry#comments" />
+    <id>https://blog.example.org/?p=1</id>
+    <published>2026-09-25T12:00:00-04:00</published>
+    <updated>2026-09-25T13:00:00-04:00</updated>
+    <author><name>Grace Researcher</name></author>
+    <author><name>Alan Engineer</name></author>
+    <summary type="html">&lt;p&gt;A humanoid robot folds towels.&lt;/p&gt;</summary>
+    <content type="html">&lt;img src="https://blog.example.org/img/fold.jpg"&gt;&lt;p&gt;Longer text.&lt;/p&gt;</content>
+  </entry>
+</feed>

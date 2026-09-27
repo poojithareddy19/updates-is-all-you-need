@@ -1,5 +1,5 @@
 {
-  "name": "@ai-pulse/frontend",
+  "name": "@updates/frontend",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -9,7 +9,7 @@
     "lint": "eslint"
   },
   "dependencies": {
-    "@ai-pulse/backend": "*",
+    "@updates/backend": "*",
     "@base-ui/react": "^1.8.0",
     "class-variance-authority": "^0.7.1",
     "cn": "^0.4.0",

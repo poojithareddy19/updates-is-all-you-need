@@ -28,8 +28,10 @@ export const items = pgTable(
   {
     id: bigserial("id", { mode: "number" }).primaryKey(),
     title: text("title").notNull(),
-    /** Canonical URL (tracking params, fragments and trailing slashes removed). */
-    url: text("url").notNull().unique(),
+    /** Link to the original, with tracking parameters and fragments removed. */
+    url: text("url").notNull(),
+    /** Looser form of the URL used to detect duplicates (see pipeline/canonical-url.ts). */
+    urlKey: text("url_key").notNull().unique(),
     /** Cross-source identity, e.g. "arxiv:2509.01234" or "hn:45123456". */
     externalId: text("external_id").unique(),
     sourceId: text("source_id").notNull(),

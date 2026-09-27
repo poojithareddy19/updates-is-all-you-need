@@ -47,6 +47,18 @@ export interface HackerNewsSource extends BaseSource {
 
 export type Source = RssSource | ArxivSource | HfPapersSource | HackerNewsSource;
 
+/**
+ * Words that mark a story as AI-related. Used for Hacker News and for feeds with
+ * `aiFilter: true`. Short all-caps acronyms match case-sensitively.
+ */
+export const AI_KEYWORDS = [
+  "AI", "A.I.", "AGI", "LLM", "GPT", "ChatGPT", "Claude", "Gemini", "Llama", "Mistral", "DeepSeek", "Qwen",
+  "OpenAI", "Anthropic", "DeepMind", "Hugging Face", "Copilot", "artificial intelligence",
+  "machine learning", "deep learning", "neural network", "neural networks", "language model",
+  "language models", "transformer", "transformers", "diffusion model", "reinforcement learning",
+  "inference", "fine-tuning", "embedding", "embeddings", "chatbot", "agentic", "robotics",
+];
+
 /** Items older than this (by published date) are ignored on each run. */
 export const LOOKBACK_HOURS = 72;
 
@@ -126,7 +138,7 @@ export const sources: Source[] = [
     name: "Google AI Blog",
     type: "article",
     kind: "rss",
-    url: "https://blog.google/technology/ai/rss/",
+    url: "https://blog.google/innovation-and-ai/technology/ai/rss/",
     homepage: "https://blog.google/technology/ai/",
     enabled: true,
   },
@@ -197,10 +209,7 @@ export const sources: Source[] = [
     name: "Hacker News",
     type: "community",
     kind: "hackernews",
-    keywords: [
-      "AI", "LLM", "GPT", "Claude", "Gemini", "Llama", "OpenAI", "Anthropic", "DeepMind",
-      "machine learning", "neural network", "transformer", "diffusion", "Hugging Face",
-    ],
+    keywords: AI_KEYWORDS,
     minPoints: 50,
     homepage: "https://news.ycombinator.com/",
     enabled: true,

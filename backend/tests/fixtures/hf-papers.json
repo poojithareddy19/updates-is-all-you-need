@@ -1,0 +1,17 @@
+[
+  {
+    "paper": {
+      "id": "2609.00001",
+      "authors": [{ "_id": "a1", "name": "First Author" }, { "_id": "a2", "name": "Second Author" }],
+      "publishedAt": "2026-09-24T00:00:00.000Z",
+      "title": "Sparse Attention for Long Context Language Models",
+      "summary": "We study sparse attention in transformers.",
+      "upvotes": 42
+    },
+    "publishedAt": "2026-09-25T20:00:00.000Z",
+    "title": "Sparse Attention for Long Context Language Models",
+    "thumbnail": "https://cdn-thumbnails.huggingface.co/social-thumbnails/papers/2609.00001.png",
+    "numComments": 3
+  },
+  { "title": "Broken entry without a paper object" }
+]

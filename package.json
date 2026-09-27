@@ -1,20 +1,20 @@
 {
-  "name": "ai-pulse",
+  "name": "updates-is-all-you-need",
   "private": true,
   "workspaces": [
     "backend",
     "frontend"
   ],
   "scripts": {
-    "dev": "npm run dev -w @ai-pulse/frontend",
-    "build": "npm run build -w @ai-pulse/frontend",
-    "lint": "npm run lint -w @ai-pulse/frontend",
-    "test": "npm test -w @ai-pulse/backend",
-    "typecheck": "npm run typecheck -w @ai-pulse/backend",
-    "db:generate": "npm run db:generate -w @ai-pulse/backend",
-    "db:migrate": "npm run db:migrate -w @ai-pulse/backend",
-    "verify-sources": "npm run verify-sources -w @ai-pulse/backend",
-    "fetch": "npm run fetch -w @ai-pulse/backend"
+    "dev": "npm run dev -w @updates/frontend",
+    "build": "npm run build -w @updates/frontend",
+    "lint": "npm run lint -w @updates/frontend",
+    "test": "npm test -w @updates/backend",
+    "typecheck": "npm run typecheck -w @updates/backend",
+    "db:generate": "npm run db:generate -w @updates/backend",
+    "db:migrate": "npm run db:migrate -w @updates/backend",
+    "verify-sources": "npm run verify-sources -w @updates/backend",
+    "fetch": "npm run fetch -w @updates/backend"
   },
   "engines": {
     "node": ">=20"

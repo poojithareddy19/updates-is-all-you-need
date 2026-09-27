@@ -13,7 +13,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "AI Pulse",
+  title: "Updates Is All You Need",
   description: "Daily AI news, articles, research papers and community discussion in one dashboard.",
 };
 

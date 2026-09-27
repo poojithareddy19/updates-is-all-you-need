@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:media="http://search.yahoo.com/mrss/">
+  <channel>
+    <title>Example AI News</title>
+    <item>
+      <title>Lab&amp;#8217;s new model tops &lt;em&gt;benchmarks&lt;/em&gt;</title>
+      <link>https://news.example.com/2026/09/25/new-model/?utm_source=rss&amp;utm_medium=feed</link>
+      <dc:creator><![CDATA[Ada Writer]]></dc:creator>
+      <pubDate>Fri, 25 Sep 2026 09:00:00 +0000</pubDate>
+      <description><![CDATA[<p>A new large language model was released today &amp; it is fast.</p>]]></description>
+      <media:content url="https://cdn.example.com/model.jpg" medium="image" />
+    </item>
+    <item>
+      <title>2026</title>
+      <guid isPermaLink="true">https://news.example.com/2026/09/24/year-in-review</guid>
+      <pubDate>Thu, 24 Sep 2026 12:00:00 GMT</pubDate>
+      <description></description>
+      <content:encoded><![CDATA[<figure><img src="https://cdn.example.com/review.png" /></figure><p>Full body text about robots.</p>]]></content:encoded>
+    </item>
+    <item>
+      <title>Old story from last month</title>
+      <link>https://news.example.com/2026/08/01/old</link>
+      <pubDate>Sat, 01 Aug 2026 12:00:00 GMT</pubDate>
+      <description>Something about gardening.</description>
+    </item>
+    <item>
+      <title>Story without a date</title>
+      <link>https://news.example.com/undated</link>
+    </item>
+  </channel>
+</rss>

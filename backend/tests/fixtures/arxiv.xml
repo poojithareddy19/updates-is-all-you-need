@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom" xmlns:arxiv="http://arxiv.org/schemas/atom">
+  <title>arXiv Query</title>
+  <entry>
+    <id>http://arxiv.org/abs/2609.00001v2</id>
+    <title>Sparse Attention for
+      Long Context Language Models</title>
+    <updated>2026-09-24T17:00:00Z</updated>
+    <published>2026-09-24T17:00:00Z</published>
+    <summary>  We study sparse attention
+      in transformers.  </summary>
+    <author><name>First Author</name></author>
+    <author><name>Second Author</name></author>
+    <link href="https://arxiv.org/abs/2609.00001v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2609.00001v2" rel="related" type="application/pdf" title="pdf"/>
+    <arxiv:primary_category term="cs.CL"/>
+    <category term="cs.CL"/>
+    <category term="cs.LG"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2609.00002v1</id>
+    <title>A Single-Author Paper</title>
+    <published>2026-09-24T16:00:00Z</published>
+    <summary>Short abstract.</summary>
+    <author><name>Solo Author</name></author>
+  </entry>
+</feed>

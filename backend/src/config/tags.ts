@@ -1,77 +1,101 @@
 /**
  * Keyword rules for topic tags. An item gets a tag when any keyword matches its
- * title or summary as a whole word (case-insensitive, except where noted).
+ * title or summary as a whole word. Matching is case-insensitive, except short
+ * all-caps acronyms ("RL", "GPU"), which match case-sensitively and allow a
+ * plural "s". Use `patterns` for anything a keyword list cannot express.
+ *
+ * Prefer specific phrases: "policy" alone would tag every reinforcement
+ * learning paper as AI Policy, and "raises" alone matches "raises concerns".
  */
 
 export interface TagRule {
   tag: string;
   keywords: string[];
-  /** Keywords matched case-sensitively, for short acronyms like "AI" or "RL". */
-  caseSensitive?: string[];
+  patterns?: RegExp[];
 }
 
 export const tagRules: TagRule[] = [
   {
     tag: "LLMs",
     keywords: [
-      "large language model", "language model", "llm", "llms", "gpt", "chatgpt", "claude",
-      "gemini", "llama", "mistral", "qwen", "deepseek", "chatbot", "prompt", "tokenizer",
-      "reasoning model", "instruction tuning", "rlhf",
+      "large language model", "large language models", "language model", "language models", "LLM",
+      "GPT", "ChatGPT", "Copilot", "Claude", "Gemini", "Llama", "Mistral", "Qwen", "DeepSeek", "chatbot",
+      "chatbots", "reasoning model", "reasoning models", "instruction tuning", "RLHF", "tokenizer",
     ],
   },
   {
     tag: "Agents",
-    keywords: ["agent", "agents", "agentic", "tool use", "tool calling", "computer use", "mcp"],
+    keywords: ["AI agent", "AI agents", "LLM agents", "agentic", "tool use", "tool calling", "computer use", "multi-agent", "MCP"],
   },
   {
     tag: "Computer Vision",
     keywords: [
-      "computer vision", "image generation", "image segmentation", "object detection",
-      "vision transformer", "diffusion model", "text-to-image", "video generation", "3d reconstruction",
+      "computer vision", "image generation", "image segmentation", "semantic segmentation",
+      "object detection", "vision transformer", "ViT", "diffusion model", "diffusion models",
+      "text-to-image", "video generation", "3D reconstruction", "image classification",
     ],
-    caseSensitive: ["ViT"],
   },
   {
     tag: "Multimodal",
-    keywords: ["multimodal", "vision-language", "vision language model", "vlm", "text-to-video", "speech", "audio"],
+    keywords: [
+      "multimodal", "multi-modal", "vision-language", "vision language model", "VLM",
+      "text-to-video", "text-to-speech", "speech recognition", "audio generation", "voice model",
+    ],
   },
   {
     tag: "Robotics",
-    keywords: ["robot", "robots", "robotics", "humanoid", "embodied", "manipulation", "autonomous driving", "self-driving"],
+    keywords: [
+      "robot", "robots", "robotic", "robotics", "humanoid", "humanoids", "embodied",
+      "autonomous driving", "self-driving", "robotic manipulation",
+    ],
   },
   {
     tag: "AI Safety",
-    keywords: ["ai safety", "alignment", "interpretability", "jailbreak", "red teaming", "misuse", "guardrail", "guardrails"],
+    keywords: [
+      "AI safety", "AI alignment", "value alignment", "interpretability", "jailbreak", "jailbreaks",
+      "red teaming", "red-teaming", "guardrails", "deceptive", "safety evaluation",
+    ],
   },
   {
     tag: "AI Policy",
     keywords: [
-      "regulation", "regulators", "policy", "ai act", "legislation", "lawsuit", "copyright",
-      "senate", "congress", "executive order", "antitrust", "ftc", "eu commission",
+      "AI policy", "AI regulation", "regulation", "regulators", "AI Act", "legislation", "lawsuit",
+      "copyright", "Senate", "Congress", "executive order", "antitrust", "FTC", "European Commission",
+      "Pentagon", "court", "policymakers",
     ],
   },
   {
     tag: "Open Source",
-    keywords: ["open source", "open-source", "open weights", "open-weight", "open model", "github", "apache 2.0"],
+    keywords: ["open source", "open-source", "open weights", "open-weight", "open-weights", "Apache 2.0", "MIT license"],
   },
   {
     tag: "Funding",
     keywords: [
-      "raises", "raised", "funding", "series a", "series b", "series c", "seed round",
-      "valuation", "acquires", "acquisition", "ipo", "investment", "investors",
+      "funding round", "Series A", "Series B", "Series C", "Series D", "seed round", "valuation",
+      "acquires", "acquisition", "IPO", "venture capital", "unicorn",
+    ],
+    patterns: [/\braise[sd]?\s+(?:a\s+)?\$\d/i, /\$\d+(?:\.\d+)?\s?(?:million|billion|[mb]n?)\b.*\b(?:round|funding|investment)/i],
+  },
+  {
+    tag: "Security",
+    keywords: [
+      "security", "cybersecurity", "vulnerability", "vulnerabilities", "exploit", "hacked", "hackers",
+      "breach", "data leak", "malware", "ransomware", "phishing", "prompt injection", "privacy",
     ],
   },
   {
     tag: "Hardware",
-    keywords: ["gpu", "gpus", "nvidia", "chip", "chips", "semiconductor", "tpu", "data center", "datacenter", "accelerator"],
+    keywords: [
+      "GPU", "Nvidia", "chip", "chips", "chipmaker", "semiconductor", "semiconductors", "TPU",
+      "data center", "data centers", "datacenter", "accelerator", "accelerators",
+    ],
   },
   {
     tag: "Healthcare",
-    keywords: ["medical", "healthcare", "clinical", "drug discovery", "protein", "biology", "diagnosis"],
+    keywords: ["medical", "healthcare", "clinical", "drug discovery", "protein", "proteins", "diagnosis", "patients"],
   },
   {
     tag: "Reinforcement Learning",
-    keywords: ["reinforcement learning", "reward model", "policy gradient"],
-    caseSensitive: ["RL"],
+    keywords: ["reinforcement learning", "reward model", "reward models", "policy gradient", "policy optimization", "RL"],
   },
 ];
